@@ -1,5 +1,52 @@
 \documentclass{article}
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage[czech]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage{syntax}
+\definecolor{notegreen}{RGB}{100, 155, 100}
+\newcommand{\sect}[1]{\LARGE\textbf{{#1}}\normalsize}
+\newcommand{\link}[1]{\textcolor{blue}{\texttt{#1}}}
+\newcommand{\td}[1]{\textcolor{red}{\textbf{TODO:} #1}}
+\newcommand{\note}[1]{\textcolor{notegreen}{#1}}
+
 \begin{document}
-(Type your content here.)
+\section*{Evaluace}\cite{huang2001spoken}16.6,14,15 \\
+Použití především automatických testů. \td{existuje něco?}
+\begin{itemize}
+\item\textit{black box vs. glass box} - testování podle komponent frameworku
+\item \textit{judgment vs. functional} - judgment jsou v kontextu dané domény;
+\item\textit{global vs. analytics} - analytics testuje jednotlivé fonémy/slabiky/slova v určitých kotextech, globals testuje celkovou srozumitelnost a kvalitu
+\end{itemize}
+Existující testy se zaměřují na testování segmentů různé granularity, nicméně chceme testovat například pro dialogy (aka. higher order test); tzn. postupn2 testovat jak kvalitu, tak celkový vjem, prefrenci mezi 2 systémy, atd. \td{jak se testují dialogy?}
+\subsection*{Frontend} úzce souvisí se srozumitelností
+\subsection*{Srozumitelnost}
+\begin{itemize}
+\item Diagnostic Rhyme Test - 96 párů slov lišících se v počátečních souhláskách
+\item Modified RT - 50 šestic podobných slov, uzavřená i otevřená varianta odpovědi; užití neutrální "nosné věty"
+\item Haskins Syntactics Sentences\cite{egan1948test} - procentuální správnost slov vět, sémanticky nedávají smysl, ale mají danou strukturu co se týče slovních druhů. Podobné varianty:\cite{nye74test},\cite{howard92test}
+\item Mean Opinion score - průměrné hodnocení na diskrétní škále 1-5. Většinou to chce nehodnotit podle absolutní srozumitelnosti ale relativně vzhledem k omezením daným taskem. Je možné soustředit se na některé aspekty (analytics). Je potřeba dost hodnotitelů, znát vzdělání, původ, atd., statistciky zpracovat
+\item AB testy, různě proházet vzorky, nemusíme být 0/1, ale jak moc byly lepší/horší
+\item Je možné oddělit vliv frontendu tak, že získáme přirozenou prosody, ještě zvlášť získáme výšky (pitch) a trvání (durations). \td{půjde to?} - detekce úzkého hrdla
+\item Perceptual Speech Quality Measurement P.862 \td{najit}
+\end{itemize}
+\note{Časem budeme chtít nějaké lidské testování. Ze začátku bych používal DRT, MRT upravené na použití proti ASR, tj 0/1. Potom udělat nějakou adaptaci tak, aby to ASR vyhodnotilo na škále, například podle WER, případně zkusit nějak automaticky testovat jednotlivé aspekty, což moc nevím jak. Například detekovat ostré změny apod. Určitě budeme chtít AB testy. Chce to otagovaný corpus}
+\\
+\sect{Frameworky}
+\begin{itemize}
+\item FestVox \url{http://www.festvox.org/}
+\item Festival \url{http://www.cstr.ed.ac.uk/projects/festival/}
+\item FreeTTS \url{http://freetts.sourceforge.net/docs/index.php}
+\end{itemize}
+\sect{Links}
+\begin{itemize}
+\item\href{https://en.wikipedia.org/wiki/Speech_synthesis}{Synthesis}
+\item\href{https://en.wikipedia.org/wiki/Formant}{Fromant}
+\item\href{https://en.wikipedia.org/wiki/Vocoder}{Vocoder}
+\item\href{https://en.wikipedia.org/wiki/Spectrogram}{Spectrogram}
+\end{itemize}
+\bibliographystyle{plain}
+\bibliography{literature.bib}
 \end{document}
