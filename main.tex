@@ -13,8 +13,8 @@
 \newcommand{\note}[1]{\textcolor{notegreen}{#1}}
 
 \begin{document}
-\section*{Evaluace}\cite{huang2001spoken}16.6,14,15 \\
-Pužití především automatických testů. \td{existuje něco?}
+\section*{Evaluace - \cite{huang2001spoken}16.6,14,15}
+Použití především automatických testů. \td{existuje něco?}
 \begin{itemize}
 \item\textit{black box vs. glass box} - testování podle komponent frameworku
 \item \textit{judgment vs. functional} - judgment jsou v kontextu dané domény;
@@ -30,17 +30,37 @@ Existující testy se zaměřují na testování segmentů různé granularity, 
 \item Mean Opinion score - průměrné hodnocení na diskrétní škále 1-5. Většinou to chce nehodnotit podle absolutní srozumitelnosti ale relativně vzhledem k omezením daným taskem. Je možné soustředit se na některé aspekty (analytics). Je potřeba dost hodnotitelů, znát vzdělání, původ, atd., statistciky zpracovat
 \item AB testy, různě proházet vzorky, nemusíme být 0/1, ale jak moc byly lepší/horší
 \item Je možné oddělit vliv frontendu tak, že získáme přirozenou prosody, ještě zvlášť získáme výšky (pitch) a trvání (durations). \td{půjde to?} - detekce úzkého hrdla
-\item Perceptual Speech Quality Measurement P.862 \td{najit}
+\item Perceptual Speech Quality Measurement P.862. \td{licence, zkusit}
+\subsection*{Textová analýza}14.9. text analysis evaluation - regresní databáze, asi nás nezajímá
+\subsection*{Analýza prosody}15.8. v přirozené nahrávce nahradíme umělou prosody. Duration, pitch contours; poměrně dobře se dá testovat automaticky
+\subsection*{Analýza prosody} Další aspekty - zpoždění, nároky na zdroje, možnost zrychlení nebo modifikace hlasu.
 \end{itemize}
 \note{Časem budeme chtít nějaké lidské testování. Ze začátku bych používal DRT, MRT upravené na použití proti ASR, tj 0/1. Potom udělat nějakou adaptaci tak, aby to ASR vyhodnotilo na škále, například podle WER, případně zkusit nějak automaticky testovat jednotlivé aspekty, což moc nevím jak. Například detekovat ostré změny apod. Určitě budeme chtít AB testy. Chce to otagovaný corpus}
 \\
-\sect{Frameworky}
+\section*{Syntéza řeči - \cite{huang2001spoken}16}
+Je rozdíl, jestli se jedná o omezenou doménu nebo ne. Typicky je dobré sledovat kromě kvality nejlepší taky podíl promluv, které je schopen s takovou kvalitou říct. Rozbor 16.1. jde o to, je-li omezená doména, provádí se modulace prosody nebo pravidlový systém.
+\subsection*{Syntéza formantů}
+Z fonémů a prosodic tagů  se generují parametry pro syntetizér. Tabulka 16.2.1. Dobré výsledky pro parametry získané z přirozené řeči, umělé parametry nezní  dobře.
+\textbf{Pravidlový systém:} Pokud je foném dostatečně dlouhý, jednotlivé formanty dosáhnou svých \textit{target} frekvencí. Některé formanty se mění ryvhleji, některé pomaleji, proto je kromě targetů potřeba ukládat i povolené změny (sklon). Jsou potřeba speciální pravidla pro nespojitosti - konec promluvy; případně existují kontexotvě závislá pravidla.\\
+\textbf{Data driven:} Použití HMM\cite{acero99HMM}.
+\subsection*{Syntéza artikulace} nelineární vztah mezi parametry(fyzické, např z RTG + F0 a fromanty) a akustikou. Nevyrovná se ostatním.
+\subsection*{Konkatenační syntéza}
+Nepotřebuje parametry, které zjednoduššují problém a jsou nepřesné. Nicméně velkým problémem je koartikualce.
+\begin{enumerate}
+\item Typ segmentu; krátké vs. dlouhé, delší jsou problematičtější, ale lepší výsledek; chceme mít několik instancí jedné jednotky (segmentu). Dále by měly být obecné a trénovatelné (ne velké). Diphony stačí, ale problémy s přechodama, triphony josu dobrý, je jich sice hodně, ale jdou klastrovat, např. pomocí DT, což dost pomáhá; Objektivní funkce - sčítá ceny jednotlivých přechodů a segmentů; minimalizace pomocí Viterbiho, problém jak nastavit costs; možnost je empiricky odvodit nebo odvodit z dat. přechody - rozdíl cepster koeficientů; používá se klastrování, nebo vážení rozdílů podle typu přechodu. 
+\item Design inventáře
+\item match segmentu na vstup
+\item pozměnění prosody segmentu
+\end{enumerate}
+Dobré hlavně na restricted domains
+\section*{Frameworky}
 \begin{itemize}
 \item FestVox \url{http://www.festvox.org/}
 \item Festival \url{http://www.cstr.ed.ac.uk/projects/festival/}
+\cite{huang2001spoken} 14.10 - textová a fonetická analýza
 \item FreeTTS \url{http://freetts.sourceforge.net/docs/index.php}
 \end{itemize}
-\sect{Links}
+\section*{Links}
 \begin{itemize}
 \item\href{https://en.wikipedia.org/wiki/Speech_synthesis}{Synthesis}
 \item\href{https://en.wikipedia.org/wiki/Formant}{Fromant}
